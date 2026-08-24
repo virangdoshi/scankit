@@ -80,13 +80,13 @@ jobs:
         with:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Checkov
-        uses: bridgecrewio/checkov-action@1246d92f57abae29d5db5f9aeeed2a9813e52d7d # v12.3117.0
+        uses: bridgecrewio/checkov-action@59b9d7edfcad5b87fbe3f473a9a134a721ad03f8 # v12.3119.0
         with:
           directory: .
           output_format: sarif
           output_file_path: console,checkov.sarif
           soft_fail: ${{ inputs.fail-on-severity == 'NONE' }}
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@db488ddef3bf6cb639b32c2e9a7c0a7ea8271d28 # v4.37.8
         if: always()
         with:
           sarif_file: checkov.sarif
@@ -112,7 +112,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: KICS
         env:
           FAIL_ON_SEVERITY: ${{ inputs.fail-on-severity }}
@@ -128,7 +128,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@db488ddef3bf6cb639b32c2e9a7c0a7ea8271d28 # v4.37.8
         if: always()
         with:
           sarif_file: kics/results.sarif
@@ -154,7 +154,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Install Trivy
         run: |
           set -euo pipefail
@@ -174,7 +174,7 @@ jobs:
             ARGS+=(--exit-code 1 --severity-exit-code "$SEV")
           fi
           trivy "${ARGS[@]}" || { [[ "$SEV" == "NONE" ]] || exit 1; }
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@db488ddef3bf6cb639b32c2e9a7c0a7ea8271d28 # v4.37.8
         if: always()
         with:
           sarif_file: trivy-config.sarif
@@ -224,7 +224,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Conftest
         env:
           CONFTEST_POLICY_PATH: ${{ inputs.conftest-policy-path }}
@@ -346,7 +346,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Kubescape
         env:
           FAIL_ON_SEVERITY: ${{ inputs.fail-on-severity }}
@@ -378,7 +378,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: cfn-guard
         env:
           FAIL_ON_SEVERITY: ${{ inputs.fail-on-severity }}

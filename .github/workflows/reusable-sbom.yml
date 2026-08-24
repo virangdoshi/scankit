@@ -83,7 +83,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Install Trivy
         run: |
           set -euo pipefail
@@ -183,7 +183,7 @@ jobs:
                           art["uri"] = stub
           path.write_text(json.dumps(data))
           PY
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@db488ddef3bf6cb639b32c2e9a7c0a7ea8271d28 # v4.37.8
         if: always() && steps.grype.outputs.sarif != ''
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
@@ -208,7 +208,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: ScanCode
         run: |
           set -euo pipefail
