@@ -119,7 +119,7 @@ jobs:
       - name: Detect
         id: detect
         # Full owner/repo/path@sha — relative ./ resolves to the *caller* repo and breaks cross-repo use
-        uses: virangdoshi/scankit/.github/actions/detect-ecosystems@f2d173ced5cb5c875da8ec4ba8cc261988d4a55d
+        uses: virangdoshi/scankit/.github/actions/detect-ecosystems@be217e52d75a3b816dcdd814719f8096cec33b45
 
   resolve-settings:
     name: resolve-settings
@@ -210,7 +210,7 @@ jobs:
           fetch-depth: 0
       - name: Resolve scan scope
         id: scope
-        uses: virangdoshi/scankit/.github/actions/resolve-scan-scope@9a80cbd5716e521391b7993fb0cfab26c3f3d442
+        uses: virangdoshi/scankit/.github/actions/resolve-scan-scope@716872ba97c64d92df1978b8aa428fc8afc17383
         with:
           scan-scope: ${{ needs.resolve-settings.outputs.scan_scope }}
           event-name: ${{ github.event_name }}

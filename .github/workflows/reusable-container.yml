@@ -79,14 +79,14 @@ jobs:
         with:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Hadolint
-        uses: hadolint/hadolint-action@2a66e89f53d0771bb131a7fa31f3136336094aa6 # v3.4.0
+        uses: hadolint/hadolint-action@06be81baf89a55ffd0e24b8f04a4185738dd3387 # v3.5.0
         with:
           dockerfile: ${{ inputs.dockerfile }}
           format: sarif
           output-file: hadolint.sarif
           failure-threshold: ${{ inputs.fail-on-severity == 'NONE' && 'error' || 'warning' }}
         continue-on-error: ${{ inputs.fail-on-severity == 'NONE' }}
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always()
         with:
           sarif_file: hadolint.sarif
@@ -109,8 +109,8 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
-      - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
       - name: Resolve image
         id: build
         env:
@@ -166,8 +166,8 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
-      - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
       - name: Resolve image
         id: build
         env:
@@ -208,7 +208,7 @@ jobs:
           fi
           ARGS+=("${{ steps.build.outputs.image }}")
           trivy "${ARGS[@]}" || { [[ "$SEV" == "NONE" ]] || exit 1; }
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always() && steps.build.outputs.image != ''
         with:
           sarif_file: trivy-image.sarif
@@ -233,7 +233,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.checkout-ref || github.sha }}
-      - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
       - name: Resolve image
         id: build
         env:
@@ -254,14 +254,14 @@ jobs:
           echo "image=$IMG" >> "$GITHUB_OUTPUT"
       - name: Grype image
         if: steps.build.outputs.image != ''
-        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         id: grype
         with:
           image: ${{ steps.build.outputs.image }}
           fail-build: ${{ inputs.fail-on-severity != 'NONE' }}
           severity-cutoff: ${{ inputs.fail-on-severity == 'NONE' && 'negligible' || inputs.fail-on-severity }}
           output-format: sarif
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always() && steps.grype.outputs.sarif != ''
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
@@ -278,8 +278,8 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
-      - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
       - name: Resolve image
         id: build
         env:
