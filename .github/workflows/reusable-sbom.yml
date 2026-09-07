@@ -53,14 +53,14 @@ jobs:
         with:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Anchore Syft SBOM (SPDX)
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
         with:
           path: .
           format: spdx-json
           output-file: syft.spdx.json
           upload-artifact: false
       - name: Anchore Syft SBOM (CycloneDX)
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
         with:
           path: .
           format: cyclonedx-json
@@ -83,7 +83,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Install Trivy
         run: |
           set -euo pipefail
@@ -140,7 +140,7 @@ jobs:
           path: sbom
       - name: Anchore Grype (SBOM)
         id: grype
-        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         with:
           sbom: sbom/syft.cdx.json
           fail-build: ${{ inputs.fail-on-severity != 'NONE' }}
@@ -150,7 +150,7 @@ jobs:
       - name: Anchore Grype JSON report
         if: always()
         id: grype-json
-        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         with:
           sbom: sbom/syft.cdx.json
           fail-build: false
@@ -183,7 +183,7 @@ jobs:
                           art["uri"] = stub
           path.write_text(json.dumps(data))
           PY
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always() && steps.grype.outputs.sarif != ''
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
@@ -208,7 +208,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: ScanCode
         run: |
           set -euo pipefail
