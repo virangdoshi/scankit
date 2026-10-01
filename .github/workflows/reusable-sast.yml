@@ -171,16 +171,16 @@ jobs:
           # >= 2 so codeql-action can see the PR merge-base for incremental analysis
           fetch-depth: 2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         with:
           languages: ${{ matrix.language }}
         continue-on-error: true
       - name: Autobuild
         if: inputs.enable-code-build
-        uses: github/codeql-action/autobuild@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+        uses: github/codeql-action/autobuild@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         continue-on-error: true
       - name: Analyze
-        uses: github/codeql-action/analyze@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         with:
           category: "/language:${{ matrix.language }}"
         continue-on-error: ${{ inputs.fail-on-severity == 'NONE' }}
@@ -207,7 +207,7 @@ jobs:
           path: .
       - name: Prepare scan paths
         id: paths
-        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@9a80cbd5716e521391b7993fb0cfab26c3f3d442
+        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@716872ba97c64d92df1978b8aa428fc8afc17383
         with:
           scan-scope: ${{ inputs.scan-scope }}
           patterns: '\.(py|pyi|go|java|kt|kts|rb|js|jsx|mjs|cjs|ts|tsx|php|cs|rs|c|cc|cpp|h|hpp)$'
@@ -229,7 +229,7 @@ jobs:
         if: steps.paths.outputs.skip == 'true'
         shell: bash
         run: echo "No matching paths in diff; skipping Semgrep" && echo '{"version":"2.1.0","runs":[]}' > semgrep.sarif
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always()
         with:
           sarif_file: semgrep.sarif
@@ -252,7 +252,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@7f7c9aec76ecf3d17a3f78831caba9043b53d53a
+        uses: virangdoshi/scankit/.github/actions/scankit-root@be217e52d75a3b816dcdd814719f8096cec33b45
       - name: Download changed-files
         if: inputs.scan-scope == 'diff'
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -261,7 +261,7 @@ jobs:
           path: .
       - name: Prepare scan paths
         id: paths
-        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@9a80cbd5716e521391b7993fb0cfab26c3f3d442
+        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@716872ba97c64d92df1978b8aa428fc8afc17383
         with:
           scan-scope: ${{ inputs.scan-scope }}
           patterns: '\.py$'
@@ -325,7 +325,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always()
         with:
           sarif_file: gosec.sarif
@@ -366,7 +366,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always()
         with:
           sarif_file: brakeman.sarif
@@ -430,7 +430,7 @@ jobs:
           path: .
       - name: Prepare scan paths
         id: paths
-        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@9a80cbd5716e521391b7993fb0cfab26c3f3d442
+        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@716872ba97c64d92df1978b8aa428fc8afc17383
         with:
           scan-scope: ${{ inputs.scan-scope }}
           patterns: '\.(py|pyi|go|java|kt|rb|js|jsx|ts|tsx|php|cs|rs|c|cc|cpp|h|hpp|sh)$'
@@ -468,7 +468,7 @@ jobs:
       - name: Skip (no matching paths)
         if: steps.paths.outputs.skip == 'true'
         run: echo "No matching paths in diff; skipping DevSkim" && echo '{"version":"2.1.0","runs":[]}' > devskim.sarif
-      - uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+      - uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         if: always()
         with:
           sarif_file: devskim.sarif
@@ -497,7 +497,7 @@ jobs:
           path: .
       - name: Prepare scan paths
         id: paths
-        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@9a80cbd5716e521391b7993fb0cfab26c3f3d442
+        uses: virangdoshi/scankit/.github/actions/prepare-scan-paths@716872ba97c64d92df1978b8aa428fc8afc17383
         with:
           scan-scope: ${{ inputs.scan-scope }}
           patterns: '\.(sh|bash|ksh|zsh)$'
