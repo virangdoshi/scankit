@@ -62,7 +62,7 @@ concurrency:
 
 jobs:
   security:
-    uses: YOUR_ORG/scankit/.github/workflows/reusable-security-full.yml@c7197e7783122e34257224c14b355c92a9d1450e # pin to commit SHA; bump when upgrading
+    uses: YOUR_ORG/scankit/.github/workflows/reusable-security-full.yml@b9246b836e49f952795404d85ceb8e3c65281d7d # pin to commit SHA; bump when upgrading
     with:
       selection-mode: detected
       fail-on-severity: HIGH
