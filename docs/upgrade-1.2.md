@@ -14,7 +14,7 @@
 Replace your workflow SHA with the [v1.2.0](https://github.com/virangdoshi/scankit/releases/tag/v1.2.0) release commit:
 
 ```yaml
-uses: YOUR_ORG/scankit/.github/workflows/reusable-security-full.yml@c7197e7783122e34257224c14b355c92a9d1450e
+uses: YOUR_ORG/scankit/.github/workflows/reusable-security-full.yml@b9246b836e49f952795404d85ceb8e3c65281d7d
 ```
 
 ## New inputs (optional)
