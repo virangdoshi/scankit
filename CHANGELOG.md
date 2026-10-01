@@ -7,14 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-10-01
+
 ### Added
 
 - **Inline PR review comments** (`pr-report-mode: inline | all`): post findings as review threads on diff lines via Pull Request Review API; replaces prior `<!-- scankit-inline -->` comments each run (cap 25).
-
-## [1.2.0] — 2026-08-19
-
-### Added
-
 - **Scan profiles** (`profile: minimal | standard | audit | soak`) via `resolve-settings` action and [`scripts/resolve-profile.sh`](scripts/resolve-profile.sh)
 - **Scan-only workflow** [`reusable-security-scan.yml`](.github/workflows/reusable-security-scan.yml) — read-only permission ceiling (no publish/PR comment jobs)
 - **`.scankit.yml` config** — [`scripts/load-scankit-config.sh`](scripts/load-scankit-config.sh), [`load-config`](.github/actions/load-config/) / [`resolve-settings`](.github/actions/resolve-settings/) actions, [`docs/config.md`](docs/config.md)
