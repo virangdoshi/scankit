@@ -30,14 +30,14 @@ jobs:
         continue-on-error: true
 
       - name: Aggregate
-        uses: virangdoshi/scankit/.github/actions/aggregate-results@be217e52d75a3b816dcdd814719f8096cec33b45
+        uses: virangdoshi/scankit/.github/actions/aggregate-results@1ad91e20f44f2c19ca672810abb698037bf70036
         with:
           artifacts-dir: artifacts
           out-root: _scankit-pr-report
 
       - name: Build comment + annotations
         id: report
-        uses: virangdoshi/scankit/.github/actions/pr-report@be217e52d75a3b816dcdd814719f8096cec33b45
+        uses: virangdoshi/scankit/.github/actions/pr-report@1ad91e20f44f2c19ca672810abb698037bf70036
         with:
           findings-json: _scankit-pr-report/latest/findings-deduped.json
           summary-md: _scankit-pr-report/latest/summary.md
