@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   meta:
-    uses: OWNER/scankit/.github/workflows/reusable-meta.yml@b9246b836e49f952795404d85ceb8e3c65281d7d # pin to commit SHA; bump when upgrading
+    uses: OWNER/scankit/.github/workflows/reusable-meta.yml@816036eb57bab4feb223f63bb2250f07424c6953 # pin to commit SHA; bump when upgrading
     with:
       selection-mode: detected
       fail-on-severity: HIGH
