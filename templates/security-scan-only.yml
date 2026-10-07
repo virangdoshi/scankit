@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   security:
-    uses: OWNER/scankit/.github/workflows/reusable-security-scan.yml@b9246b836e49f952795404d85ceb8e3c65281d7d
+    uses: OWNER/scankit/.github/workflows/reusable-security-scan.yml@816036eb57bab4feb223f63bb2250f07424c6953
     with:
       profile: standard
       selection-mode: detected
