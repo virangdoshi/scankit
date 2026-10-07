@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] — 2026-10-07
+
+### Security
+
+- Override pinned API-tool transitive deps in [`.github/pinned/npm-api`](.github/pinned/npm-api): `fast-uri` 3.1.8, `js-yaml` 3.15.2, `brace-expansion` 1.1.21 / 2.1.7 (Dependabot alerts #3–#15). `braces` / `sprintf-js` remain open with no upstream patch.
+
+### Changed
+
+- Bump GitHub Actions group pins (Dependabot #44)
+
 ## [1.2.0] — 2026-10-01
 
 ### Added
