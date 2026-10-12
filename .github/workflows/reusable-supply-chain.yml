@@ -107,12 +107,12 @@ jobs:
           results_file: scorecard.sarif
           results_format: sarif
           publish_results: ${{ inputs.scorecard-publish-results }}
-      - uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+      - uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: scorecard.sarif
           category: supply-scorecard
         continue-on-error: true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: supply-scorecard-sarif
           path: scorecard.sarif
@@ -127,7 +127,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
@@ -146,7 +146,7 @@ jobs:
             guarddog go scan go.mod --output-format json > guarddog-out/go.json || true
           fi
           ls -la guarddog-out || true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-guarddog
@@ -163,7 +163,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: "1.23.x"
@@ -178,7 +178,7 @@ jobs:
           go install github.com/interlynk-io/sbomqs@535bcec4bb80a2624a088d9ca1a23160f2ab8750  # v0.2.0
           export PATH="$(go env GOPATH)/bin:$PATH"
           sbomqs score sbom.cdx.json | tee sbomqs.txt || true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-sbomqs
@@ -210,7 +210,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-pinact-txt
@@ -243,7 +243,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-ratchet-txt
@@ -260,7 +260,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - name: Install slsa-verifier
         run: |
           curl -sL "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.0/slsa-verifier-linux-amd64" -o slsa-verifier
@@ -273,7 +273,7 @@ jobs:
         run: |
           ./slsa-verifier verify-artifact "$SLSA_ARTIFACT" \
             --source-uri "$SLSA_SOURCE_URI" | tee slsa-verify.txt
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-slsa-verify
@@ -296,7 +296,7 @@ jobs:
             --certificate-identity "$COSIGN_CERTIFICATE_IDENTITY" \
             --certificate-oidc-issuer "$COSIGN_CERTIFICATE_OIDC_ISSUER" \
             "$IMAGE" | tee cosign-verify.txt
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-cosign-verify
@@ -330,7 +330,7 @@ jobs:
               exit 1
             fi
           fi
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: supply-security-insights
