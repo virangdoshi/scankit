@@ -67,7 +67,7 @@ jobs:
               ;;
           esac
       - name: Download scan artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           path: artifacts
           # Prefer named scan reports; missing artifacts are OK when some jobs skipped
@@ -75,7 +75,7 @@ jobs:
         continue-on-error: true
       - name: Aggregate
         # Full owner/repo/path@sha — relative ./ resolves to the *caller* repo and breaks cross-repo use
-        uses: virangdoshi/scankit/.github/actions/aggregate-results@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/aggregate-results@4e03dad97d9b4418499e9c48e996822e9b7b27b3
         with:
           artifacts-dir: artifacts
           out-root: ${{ inputs.results-path }}

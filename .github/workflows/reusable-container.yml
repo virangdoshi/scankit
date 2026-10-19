@@ -86,13 +86,13 @@ jobs:
           output-file: hadolint.sarif
           failure-threshold: ${{ inputs.fail-on-severity == 'NONE' && 'error' || 'warning' }}
         continue-on-error: ${{ inputs.fail-on-severity == 'NONE' }}
-      - uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+      - uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         if: always()
         with:
           sarif_file: hadolint.sarif
           category: container-hadolint
         continue-on-error: true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: container-hadolint-sarif
@@ -109,7 +109,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
       - name: Resolve image
         id: build
@@ -145,7 +145,7 @@ jobs:
           if [[ "$FAIL_ON_SEVERITY" != "NONE" && "$EXIT" -ne 0 ]]; then
             exit "$EXIT"
           fi
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: container-dockle-json
@@ -166,7 +166,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
       - name: Resolve image
         id: build
@@ -208,13 +208,13 @@ jobs:
           fi
           ARGS+=("${{ steps.build.outputs.image }}")
           trivy "${ARGS[@]}" || { [[ "$SEV" == "NONE" ]] || exit 1; }
-      - uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+      - uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         if: always() && steps.build.outputs.image != ''
         with:
           sarif_file: trivy-image.sarif
           category: container-trivy-image
         continue-on-error: true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: container-trivy-image-sarif
@@ -261,7 +261,7 @@ jobs:
           fail-build: ${{ inputs.fail-on-severity != 'NONE' }}
           severity-cutoff: ${{ inputs.fail-on-severity == 'NONE' && 'negligible' || inputs.fail-on-severity }}
           output-format: sarif
-      - uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+      - uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         if: always() && steps.grype.outputs.sarif != ''
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
@@ -278,7 +278,7 @@ jobs:
           ref: ${{ inputs.checkout-ref || github.sha }}
       - name: Resolve scankit root
         id: scankit
-        uses: virangdoshi/scankit/.github/actions/scankit-root@1ad91e20f44f2c19ca672810abb698037bf70036
+        uses: virangdoshi/scankit/.github/actions/scankit-root@4e03dad97d9b4418499e9c48e996822e9b7b27b3
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
       - name: Resolve image
         id: build
@@ -306,7 +306,7 @@ jobs:
           bash "${{ steps.scankit.outputs.root }}/scripts/verify-sha256.sh" dive.tgz 20a7966523a0905f950c4fbf26471734420d6788cfffcd4a8c4bc972fded3e96
           tar -xzf dive.tgz
           CI=true ./dive "${{ steps.build.outputs.image }}" | tee dive.txt || true
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: container-dive-txt
@@ -331,7 +331,7 @@ jobs:
             --certificate-identity "$COSIGN_CERTIFICATE_IDENTITY" \
             --certificate-oidc-issuer "$COSIGN_CERTIFICATE_OIDC_ISSUER" \
             "$IMAGE" | tee cosign-verify.txt
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: container-cosign-verify
